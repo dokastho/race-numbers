@@ -1,0 +1,10 @@
+# Collegiate Men's B Blue Crit
+
+|     | Race Number   | Last Name   | First Name   | Team                                  | Phone          | Emergency Contact   | Emergency Phone   |   USAC License |   ZIP |   USAC Category Road | Category Entered / Merchandise Ordered   |
+|----:|:--------------|:------------|:-------------|:--------------------------------------|:---------------|:--------------------|:------------------|---------------:|------:|---------------------:|:-----------------------------------------|
+|  50 |               | Bischof     | Patrick      | University of Cincinnati Cycling Club | (440) 773-2372 | Hunter Marshall     | (440) 384-9335    |         515652 | 45219 |                    3 | Collegiate Men's B Blue Crit             |
+|  71 |               | Lane        | Jonathan     | Purdue Cycling Club                   | (949) 537-6768 | Carmela Rossi-Lane  | (949) 232-6873    |         633424 | 92603 |                    3 | Collegiate Men's B Blue Crit             |
+|  26 |               | Dokas       | Thomas       | University of Michigan - Cycling      | (734) 545-3816 | Michelle Dokas      | (734) 558-2869    |         616748 | 48105 |                    3 | Collegiate Men's B Blue Crit             |
+|  77 |               | Volcic      | Frank        | University of Michigan - Ann Arbor    | (248) 525-5111 | ed volcic           | (586) 365-8220    |         631174 | 48104 |                    3 | Collegiate Men's B Blue Crit             |
+| 121 |               | Cummins     | Drew         | University of Michigan - Cycling      | (231) 735-1748 | Paula Colombo       | (231) 360-8441    |         448061 | 49686 |                    3 | Collegiate Men's B Blue Crit             |
+|  89 |               | Shuros      | Andrew       | University of Wisconsin-Madison       | (651) 308-1479 | Miriam Shuros       | (651) 245-1289    |         392169 | 55116 |                    4 | Collegiate Men's B Blue Crit             |
