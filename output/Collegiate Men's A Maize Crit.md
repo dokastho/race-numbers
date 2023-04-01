@@ -1,8 +1,0 @@
-# Collegiate Men's A Maize Crit
-
-|     | Race Number   | Last Name   | First Name   | Team                                | Phone          | Emergency Contact   | Emergency Phone   |   USAC License |   ZIP |   USAC Category Road | Category Entered / Merchandise Ordered   |
-|----:|:--------------|:------------|:-------------|:------------------------------------|:---------------|:--------------------|:------------------|---------------:|------:|---------------------:|:-----------------------------------------|
-| 124 |               | Natter      | Bryce        | University of Michigan - Cycling    | (248) 207-7391 | Brantley Natter     | (248) 207-7391    |         538985 | 48114 |                    2 | Collegiate Men's A Maize Crit            |
-|  58 |               | Messer      | Aaron        | University of Wisconsin-Platteville | 9205820197     | Linda Messer        | 920-420-9673      |         623626 | 54986 |                    2 | Collegiate Men's A Maize Crit            |
-| 139 |               | Iesalnieks  | Benjamin     | University of Wisconsin-Madison     | (715) 379-0101 | Ray Iesalnieks      | (715) 803-8992    |         576362 | 53705 |                    3 | Collegiate Men's A Maize Crit            |
-|  59 |               | Friberg     | Lunden       | Purdue Cycling Club                 | (920) 327-1323 | Gabi Mazion         | (952) 446-5235    |         423445 | 54301 |                    3 | Collegiate Men's A Maize Crit            |

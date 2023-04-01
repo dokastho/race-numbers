@@ -2,6 +2,41 @@ import pandas as pd
 
 numbers = dict()
 
+html_content = """<!DOCTYPE html>
+<html>
+<head>
+<style>
+h1 {
+  font-family: Arial  
+}
+
+.dataframe {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.dataframe td, .dataframe th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.dataframe tr:nth-child(even){background-color: #f2f2f2;}
+
+.dataframe tr:hover {background-color: #ddd;}
+
+.dataframe th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+"""
+
 def write_csv(df: pd.DataFrame):
     race_names = list(set(df['Category Entered / Merchandise Ordered']))
     df = df[[
@@ -24,8 +59,8 @@ def write_csv(df: pd.DataFrame):
     for race_name in race_names:
         race_df: pd.DataFrame = df[df['Category Entered / Merchandise Ordered'] == race_name]
         race_name = race_name.replace('/', ' ')
-        file_name = f'output/{race_name}.md'
-        race_df.to_markdown(file_name)
+        file_name = f'output/{race_name}.html'
+        race_df.to_html(file_name)
         file_names.append(file_name)
         pass
     
@@ -33,9 +68,11 @@ def write_csv(df: pd.DataFrame):
         with open(file_name, 'r+') as f:
             content = f.read()
             f.seek(0, 0)
-            file_name = file_name.rstrip('.md')
+            file_name = file_name.rstrip('html')
+            file_name = file_name.rstrip('.')
+            
             file_name = file_name.lstrip('output/')
-            f.write(f'# {file_name}' + '\n\n' + content)
+            f.write(f'{html_content}<h1>{file_name}</h1>' + '\n\n' + content.replace('None', '    ') + "\n</body>")
         pass
     
     pass

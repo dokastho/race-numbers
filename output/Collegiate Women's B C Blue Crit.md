@@ -1,8 +1,0 @@
-# Collegiate Women's B C Blue Crit
-
-|     | Race Number   | Last Name   | First Name   | Team                             | Phone          | Emergency Contact   | Emergency Phone   | USAC License   | ZIP        |   USAC Category Road | Category Entered / Merchandise Ordered   |
-|----:|:--------------|:------------|:-------------|:---------------------------------|:---------------|:--------------------|:------------------|:---------------|:-----------|---------------------:|:-----------------------------------------|
-|  98 |               | Ruiz        | Valeria      | UChicago Velo Club               | (954) 681-8915 | Clara Argote        | (305) 890-7558    | 653061         | 60637-3434 |                    4 | Collegiate Women's B/C Blue Crit         |
-| 148 |               | Adejumo     | Hollie       | University of Michigan - Cycling | (443) 909-8564 | Kevin Manieri       | (734) 223-1523    | 499487         | 48197      |                    4 | Collegiate Women's B/C Blue Crit         |
-|  97 |               | Yray        | Elizabeth    | Wisconsin Cycling Club           | (715) 245-7745 | Jody Yray           | (715) 832-4956    | ONE DAY        | 54016      |                  nan | Collegiate Women's B/C Blue Crit         |
-| 143 |               | Savoy       | Sarah        | Case Western Reserve University  | (508) 562-1694 | Deepesh Duwadi      | (413) 858-7379    | 467590         | 44120      |                  nan | Collegiate Women's B/C Blue Crit         |
