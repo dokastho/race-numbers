@@ -70,9 +70,8 @@ def load_collegiate_numbers():
     pass
 
 
-def write_csv(df: pd.DataFrame):
+def write_html(df: pd.DataFrame):
     race_names = list(set(df['Category Entered / Merchandise Ordered']))
-    # cats = list(set(df['USAC Category Road']))
     df = df[[
         'Race Number',
         'Last Name',
@@ -106,22 +105,43 @@ def write_csv(df: pd.DataFrame):
             file_name = file_name.rstrip('.')
 
             file_name = file_name.lstrip('output/')
-            f.write(f'{html_content}<h1>{file_name}</h1>' + '\n\n' + content.replace('None', '    ') + "\n</body>")
+            f.write(f'{html_content}<h1>{file_name}</h1>' + '\n\n' +
+                    content.replace('None', '    ') + "\n</body>")
         pass
 
-    # roster_info = df[[
-    #     'Race Number',
-    #     'USAC Category Road',
-    #     'Last Name',
-    #     'First Name',
-    #     'Team',
-    #     'USAC License'
-    # ]]
-    # for cat in cats:
-    #     race_df: pd.DataFrame = roster_info[roster_info['USAC Category Road'] == cat]
-    #     file_name = f'output/cat-{cat}-{d}.csv'
-    #     roster_info.to_csv(file_name)
-    #     pass
+    pass
+
+
+def write_domestic_numbers(df: pd.DataFrame):
+    cats = list(set(df['USAC Category Road']))
+
+    for cat in cats:
+        # filter by category
+        cat_df: pd.DataFrame = df[df['USAC Category Road'] == cat]
+
+        # remove collegiate
+        cat_df = cat_df[cat_df['Category Entered / Merchandise Ordered'].str.contains('Domestic')]
+        
+        # remove collegiate participants
+        cat_df = cat_df[cat_df['Race Number'] >= 1000]
+
+        # pick columns
+        cat_df = cat_df[[
+            'Race Number',
+            'USAC License',
+            'Last Name',
+            'First Name',
+            'Team',
+            'USAC Category Road'
+        ]]
+
+        # drop duplicates
+        cat_df = cat_df.drop_duplicates()
+
+        # write CSV
+        cat_df.to_csv(f'output/domestic-cat-{cat}.csv')
+        pass
+
     pass
 
 
@@ -187,9 +207,9 @@ def main():
         rider_name = get_rider_name(row)
         rider_names.append(rider_name)
         pass
-    
+
     rider_names = list(set(rider_names))
-        
+
     for rider_name in rider_names:
         if rider_name not in numbers.keys():
             numbers[rider_name] = None
@@ -197,7 +217,7 @@ def main():
 
     # sort by gender
     df = df.sort_values('Gender')
-    
+
     # assign numbers to riders
     df = add_race_numbers(df)
 
@@ -223,12 +243,15 @@ def main():
     blue_col_f = blue_col[blue_col.Gender == 'F']
 
     # write to output
-    write_csv(maize_m)
-    write_csv(maize_f)
-    write_csv(blue_dom_m)
-    write_csv(blue_dom_f)
-    write_csv(blue_col_m)
-    write_csv(blue_col_f)
+    write_html(maize_m)
+    write_html(maize_f)
+    write_html(blue_dom_m)
+    write_html(blue_dom_f)
+    write_html(blue_col_m)
+    write_html(blue_col_f)
+
+    # save domestic number assignments
+    write_domestic_numbers(df)
     pass
 
 
