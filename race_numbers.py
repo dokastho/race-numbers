@@ -1,4 +1,5 @@
 import pandas as pd
+import math
 
 numbers = dict()
 
@@ -37,8 +38,41 @@ h1 {
 <body>
 """
 
+
+def roundup(x):
+    return int(math.ceil(x / 100.0)) * 100
+
+
+def get_rider_name(row):
+    fname: str = row["First Name"].item()
+    lname: str = row["Last Name"].item()
+    rider_name = fname.upper() + " " + lname.upper()
+    return rider_name
+
+
+def load_collegiate_numbers():
+    col_nums_filename = 'just_bibs.csv'
+    df = pd.read_csv(col_nums_filename)
+    for index, row in df.iterrows():
+        row = df[df.index == index]
+        if sum(row.isnull().any()) == 3:
+            continue
+        rider_name = get_rider_name(row)
+        race_num = row["Race Number"].item()
+        if rider_name in numbers.keys():
+            old_race_num = numbers[rider_name]
+            did_cat_up = roundup(old_race_num) != roundup(race_num)
+            if did_cat_up:
+                continue
+            pass
+        numbers[rider_name] = race_num
+        pass
+    pass
+
+
 def write_csv(df: pd.DataFrame):
     race_names = list(set(df['Category Entered / Merchandise Ordered']))
+    cats = list(set(df['USAC Category Road']))
     df = df[[
         'Race Number',
         'Last Name',
@@ -52,9 +86,9 @@ def write_csv(df: pd.DataFrame):
         'USAC Category Road',
         'Category Entered / Merchandise Ordered'
     ]]
-    
+
     race_name: str
-    
+
     file_names: 'list[str]' = []
     for race_name in race_names:
         race_df: pd.DataFrame = df[df['Category Entered / Merchandise Ordered'] == race_name]
@@ -63,18 +97,31 @@ def write_csv(df: pd.DataFrame):
         race_df.to_html(file_name)
         file_names.append(file_name)
         pass
-    
-    for file_name  in file_names:
+
+    for file_name in file_names:
         with open(file_name, 'r+') as f:
             content = f.read()
             f.seek(0, 0)
             file_name = file_name.rstrip('html')
             file_name = file_name.rstrip('.')
-            
+
             file_name = file_name.lstrip('output/')
             f.write(f'{html_content}<h1>{file_name}</h1>' + '\n\n' + content.replace('None', '    ') + "\n</body>")
         pass
-    
+
+    roster_info = df[[
+        'Race Number',
+        'USAC Category Road',
+        'Last Name',
+        'First Name',
+        'Team',
+        'USAC License'
+    ]]
+    for cat in cats:
+        race_df: pd.DataFrame = roster_info[roster_info['USAC Category Road'] == cat]
+        file_name = f'output/cat-{cat}-{d}.csv'
+        roster_info.to_csv(file_name)
+        pass
     pass
 
 
@@ -89,23 +136,24 @@ def add_race_numbers(df: pd.DataFrame) -> pd.DataFrame:
     })
     for idx in list(df.index):
         row = df[df.index == idx]
-        cat = int(row['USAC Category Road'].item())
-        if cat is None:
-            cat = 5
+        cat = 5.0
+        cat_row = row['USAC Category Road']
+        if not cat_row.isnull().any():
+            cat = cat_row.item()
             pass
 
-        is_junior = 'Junior' in row['Category Entered / Merchandise Ordered']
+        is_junior = 'Junior' in row['Category Entered / Merchandise Ordered'].item()
         if is_junior:
             cat = 6
             pass
-        
+
         num = 1000 + (cat * 100) + number_counters[cat]
-        racer_id = row.RacerID.item()
-        if racer_id in numbers.keys():
-            num = numbers[racer_id]
+        rider_name = get_rider_name(row)
+        if rider_name in numbers.keys():
+            num = numbers[rider_name]
             pass
         else:
-            numbers[racer_id] = num
+            numbers[rider_name] = num
             number_counters[cat] += 1
             pass
 
@@ -123,17 +171,23 @@ def main():
     cat_str: str = "USAC Category Road"
     df = pd.read_csv(filename)
 
+    # load existing numbers into `numbers`
+    load_collegiate_numbers()
+
     # add number column
     df['Race Number'] = None
-    
-    # assign None numbers to collegiate riders
-    collegiates = set(df[df[race_str].str.contains('Collegiate')]['RacerID'])
-    for race_id in list(collegiates):
-        numbers[race_id] = None
-        pass
+
+    # # assign None numbers to collegiate riders
+    # collegiates = set(df[df[race_str].str.contains('Collegiate')]['RacerID'])
+    # for race_id in list(collegiates):
+    #     numbers[race_id] = None
+    #     pass
 
     # sort by gender
     df = df.sort_values('Gender')
+    
+    # assign numbers to riders
+    df = add_race_numbers(df)
 
     # filter by maize and blue
     maize = df[df[race_str].str.contains('Maize')]
@@ -143,18 +197,14 @@ def main():
     blue_dom = blue[blue[race_str].str.contains('Domestic')]
     blue_col = blue[blue[race_str].str.contains('Collegiate')]
 
-    # assign numbers to domestic riders
-    blue_dom = add_race_numbers(blue_dom)
-
     # sort by category
     maize = maize.sort_values(cat_str)
     blue_col = blue_col.sort_values(cat_str)
     blue_dom = blue_dom.sort_values(cat_str)
-    
 
     # filter by gender
     maize_m = maize[maize.Gender == 'M']
-    maize_f = maize[maize.Gender == 'M']
+    maize_f = maize[maize.Gender == 'F']
     blue_dom_m = blue_dom[blue_dom.Gender == 'M']
     blue_dom_f = blue_dom[blue_dom.Gender == 'F']
     blue_col_m = blue_col[blue_col.Gender == 'M']
