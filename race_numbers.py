@@ -72,7 +72,7 @@ def load_collegiate_numbers():
 
 def write_csv(df: pd.DataFrame):
     race_names = list(set(df['Category Entered / Merchandise Ordered']))
-    cats = list(set(df['USAC Category Road']))
+    # cats = list(set(df['USAC Category Road']))
     df = df[[
         'Race Number',
         'Last Name',
@@ -109,19 +109,19 @@ def write_csv(df: pd.DataFrame):
             f.write(f'{html_content}<h1>{file_name}</h1>' + '\n\n' + content.replace('None', '    ') + "\n</body>")
         pass
 
-    roster_info = df[[
-        'Race Number',
-        'USAC Category Road',
-        'Last Name',
-        'First Name',
-        'Team',
-        'USAC License'
-    ]]
-    for cat in cats:
-        race_df: pd.DataFrame = roster_info[roster_info['USAC Category Road'] == cat]
-        file_name = f'output/cat-{cat}-{d}.csv'
-        roster_info.to_csv(file_name)
-        pass
+    # roster_info = df[[
+    #     'Race Number',
+    #     'USAC Category Road',
+    #     'Last Name',
+    #     'First Name',
+    #     'Team',
+    #     'USAC License'
+    # ]]
+    # for cat in cats:
+    #     race_df: pd.DataFrame = roster_info[roster_info['USAC Category Road'] == cat]
+    #     file_name = f'output/cat-{cat}-{d}.csv'
+    #     roster_info.to_csv(file_name)
+    #     pass
     pass
 
 
@@ -177,11 +177,23 @@ def main():
     # add number column
     df['Race Number'] = None
 
-    # # assign None numbers to collegiate riders
-    # collegiates = set(df[df[race_str].str.contains('Collegiate')]['RacerID'])
-    # for race_id in list(collegiates):
-    #     numbers[race_id] = None
-    #     pass
+    # assign None numbers to collegiate riders who aren't in the USAC file
+    collegiates = df[df[race_str].str.contains('Collegiate')]
+    rider_names: 'list[str]' = []
+    for index, row in collegiates.iterrows():
+        row = df[df.index == index]
+        if sum(row.isnull().any()) == 3:
+            continue
+        rider_name = get_rider_name(row)
+        rider_names.append(rider_name)
+        pass
+    
+    rider_names = list(set(rider_names))
+        
+    for rider_name in rider_names:
+        if rider_name not in numbers.keys():
+            numbers[rider_name] = None
+        pass
 
     # sort by gender
     df = df.sort_values('Gender')
