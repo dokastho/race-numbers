@@ -137,6 +137,7 @@ def write_domestic_numbers(df: pd.DataFrame):
 
         # drop duplicates
         cat_df = cat_df.drop_duplicates()
+        cat_df = cat_df.sort_values('Race Number')
 
         # write CSV
         cat_df.to_csv(f'output/domestic-cat-{cat}.csv')
